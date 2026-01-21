@@ -1,0 +1,366 @@
+/* Base Styles & Variables */
+:root {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent-color: #3b82f6;
+    --accent-hover: #2563eb;
+    --success-color: #22c55e;
+    --warning-color: #eab308;
+    --danger-color: #ef4444;
+    --input-bg: #2d2d2d;
+    --border-color: #404040;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    padding: 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px; /* Slightly wider for the extra column */
+    padding-bottom: 120px;
+}
+
+/* Header */
+header {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+header .title-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.icon-btn:hover {
+    background: var(--input-bg);
+}
+
+.settings-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--card-bg);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    flex-wrap: wrap;
+}
+
+.settings-group label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.vat-input {
+    width: 50px;
+    background: transparent;
+    border: none;
+    color: var(--accent-color);
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: right;
+    border-bottom: 1px solid transparent;
+}
+
+.vat-input:focus {
+    outline: none;
+    border-bottom: 1px solid var(--accent-color);
+}
+
+/* Calculator Card (Row) */
+.calc-row {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.calc-row:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.row-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.row-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.remove-btn { color: var(--danger-color); font-size: 1.2rem; }
+.clear-btn { color: var(--text-secondary); font-size: 0.9rem; border: 1px solid var(--border-color); }
+.clear-btn:hover { background: var(--input-bg); color: var(--text-primary); }
+
+/* Input Grid */
+.input-grid {
+    display: grid;
+    /* Default 4 columns: [Cost] [Margin] [SellEx] [SellInc] */
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    transition: grid-template-columns 0.3s ease;
+}
+
+/* 5-Column Mode when RRP is visible */
+.input-grid.has-rrp {
+    /* [RRP] [Cost] [Margin] [SellEx] [SellInc] */
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+/* RRP Group Toggling */
+.rrp-group {
+    display: flex; /* Normal state */
+}
+.rrp-group.hidden {
+    display: none !important;
+}
+
+.input-group label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rrp-label {
+    color: var(--warning-color) !important;
+}
+
+input[type="number"] {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.6rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+/* Readonly fields styling (like Calculated Cost) */
+input[readonly] {
+    opacity: 0.7;
+    border-style: dashed;
+    cursor: not-allowed;
+}
+
+/* Margin Input Styling */
+.margin-input { font-weight: bold; }
+.margin-high { color: var(--success-color); border-color: var(--success-color) !important; }
+.margin-med { color: #facc15; border-color: #facc15 !important; }
+.margin-low { color: var(--danger-color); border-color: var(--danger-color) !important; }
+
+/* Results Section inside Row */
+.results-inline {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.75rem;
+    border-radius: 8px;
+}
+
+.result-box { text-align: center; }
+.result-label { font-size: 0.7rem; color: var(--text-secondary); display: block; margin-bottom: 0.25rem; }
+.result-value { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
+.profit { color: var(--success-color); }
+
+.profit-item { transition: background-color 0.3s, color 0.3s; border-radius: 4px; padding: 2px 4px; }
+.profit-item.loss .profit { color: var(--danger-color); }
+.profit-item.loss { background-color: rgba(239, 68, 68, 0.1); }
+
+/* Floating Action Button */
+.fab-container {
+    position: fixed;
+    bottom: 100px;
+    right: 1.5rem;
+    z-index: 50;
+}
+
+.fab {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s;
+}
+
+.fab:hover { transform: scale(1.05); }
+
+/* Grand Total Footer */
+.grand-total-bar {
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 100%;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+    z-index: 60;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.total-group { text-align: center; }
+.total-label { font-size: 0.75rem; color: var(--text-secondary); display: block; }
+.total-value { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); }
+#total-profit { color: var(--success-color); }
+
+/* Modal Styling */
+.modal {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+}
+.modal.hidden { display: none; }
+.modal-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%; max-width: 400px;
+    border: 1px solid var(--border-color);
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.close-btn { background: none; border: none; color: var(--text-secondary); font-size: 1.5rem; cursor: pointer; }
+.primary-btn {
+    width: 100%; padding: 0.8rem;
+    background: var(--accent-color);
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600; cursor: pointer;
+    margin-top: 1rem;
+}
+
+/* Legend Styling */
+.legend {
+    display: flex; gap: 1rem; margin-top: 1rem; padding: 1rem;
+    background: var(--bg-color); border-radius: 6px;
+}
+.legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.green { background: var(--success-color); }
+.dot.yellow { background: var(--warning-color); }
+.dot.red { background: var(--danger-color); }
+
+/* --- Mobile / Responsive --- */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    header .title-group {
+        justify-content: space-between;
+    }
+    .settings-group {
+        justify-content: space-between;
+    }
+    
+    .input-grid {
+        /* On tablet/mobile, default to 2 columns */
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    /* When RRP is visible, how do we handle 5 items on mobile? 
+       2 cols is still best, it will just wrap to 3 rows.
+       RRP | Cost
+       Margin | SellEx
+       SellInc | [Empty]
+    */
+    .input-grid.has-rrp {
+        grid-template-columns: 1fr 1fr; 
+    }
+
+    .grand-total-bar {
+        padding: 0.75rem;
+        justify-content: space-between;
+    }
+    .grand-total-bar button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .total-group {
+        flex: 1;
+    }
+}
