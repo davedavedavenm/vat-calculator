@@ -2,6 +2,10 @@
 
 Small static VAT margin calculator app.
 
+Read [DECISIONS.md](DECISIONS.md) before starting work — settled, closed
+questions (dependency-free by default). Check before proposing to change
+or redo something.
+
 ## Scope
 
 - `index.html`, `styles.css`, `app.js`, and README updates for the calculator.
